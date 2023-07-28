@@ -1,29 +1,39 @@
-import { Box, TextField, Button } from '@mui/material';
+import { Box, TextField, Button, Typography } from '@mui/material';
 import React, { useState } from 'react' ;
 import p1 from '../../images/p1.png';
-import { signupUser } from '../../../../server/controller/user-controller';
+import { API } from '../../service/api.js';
 
+
+const signupValues ={
+  name:'',
+  username:'',
+  password:'',
+}
 const Login = () => {
 
-  const signupValues ={
-    name:'',
-    username:'',
-    password:''
-  }
+  
 
   const [account, toggleAccount]=useState('login');
   const [signup, setSignup] =useState(signupValues);
+  const [error, setError] = useState('');
 
   const toggleSignup = () =>{
     account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
   }
 
   const InputChange = (e) => {
-   setSignup(...signup, {[e.target.name]:e.target.value});
+   setSignup({...signup, [e.target.name]:e.target.value});
   }
 
-  const signupUser = () => {
-    
+  const signupUser = async () => {
+     let response = await API.userSignup(signup);
+     if(response.isSuccess){
+      setError('');
+      setSignup(signupValues);
+      toggleAccount('login');
+     }else{
+       setError('Something weny wrong! Please try again');
+     }
   }
   return (
     <>
@@ -82,12 +92,13 @@ const Login = () => {
         label="Password"
         name='password'
         onChange={(e) => InputChange(e)} />
+        {error && <Typography>{error}</Typography>}
       <Button
         sx={{ mt: 3, width: 100, bgcolor: '#4FC0D0', ":hover": { bgcolor: '#FF55BB' } }}
         disabled={false}
         size="medium"
         variant="contained"
-        onClick={()=> signupUser()}
+        onClick={()=> {signupUser()}}
       >Sign Up
       </Button>
       <p className='mt-2'>OR</p>
