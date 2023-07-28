@@ -1,6 +1,7 @@
 import { Box, TextField, Button } from '@mui/material';
 import React, { useState } from 'react' ;
 import p1 from '../../images/p1.png';
+import { signupUser } from '../../../../server/controller/user-controller';
 
 const Login = () => {
 
@@ -19,6 +20,10 @@ const Login = () => {
 
   const InputChange = (e) => {
    setSignup(...signup, {[e.target.name]:e.target.value});
+  }
+
+  const signupUser = () => {
+    
   }
   return (
     <>
@@ -82,6 +87,7 @@ const Login = () => {
         disabled={false}
         size="medium"
         variant="contained"
+        onClick={()=> signupUser()}
       >Sign Up
       </Button>
       <p className='mt-2'>OR</p>
