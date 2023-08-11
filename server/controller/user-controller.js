@@ -1,6 +1,8 @@
+import { response } from "express";
 import User from "../model/user.js";
 // this dependency below is imported for the purpose of encryption of password so that others can't see it 
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 
 export const signupUser = async (req, res) => {
@@ -20,4 +22,25 @@ try {
     return res.status(500).json({msg:'Error while signup'})
     
 }
+}
+
+export const loginUser = async (req, res) => {
+    let user= await User.findOne({username : req.body.username});
+    if(!user){
+        return res.status(400).json({msg: 'Username does not match'});
+    }
+    try {
+       let match = await bcrypt.compare(req.body.password, user.password); 
+       if(match){
+        // now we will match the password using token authentication by installing npm jsonwebtoken
+// the accesstoken expires after sometime so we have to create a refresh token so that it can generate a new access token
+const accessToken= jwt.sign(user.toJSON(), )
+const refreshToken=
+       }else{
+       return res.status(400).json({msg: 'password does not match'});
+       }
+    } catch (error) {
+        
+    }
+
 }

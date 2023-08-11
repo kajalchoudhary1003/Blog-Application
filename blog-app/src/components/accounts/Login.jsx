@@ -3,6 +3,10 @@ import React, { useState } from 'react' ;
 import p1 from '../../images/p1.png';
 import { API } from '../../service/api.js';
 
+const loginValues = {
+  username:'',
+  password:'',
+}
 
 const signupValues ={
   name:'',
@@ -16,6 +20,7 @@ const Login = () => {
   const [account, toggleAccount]=useState('login');
   const [signup, setSignup] =useState(signupValues);
   const [error, setError] = useState('');
+  const [login, setLogin] =useState(loginValues);
 
   const toggleSignup = () =>{
     account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
@@ -35,6 +40,20 @@ const Login = () => {
        setError('Something weny wrong! Please try again');
      }
   }
+
+  const onValueChange = (e) =>{
+    setLogin({...login, [e.target.name]:e.target.value})
+  }
+
+  const loginUser = async () => {
+let response = await API.userLogin(login);
+if(response.isSuccess){
+setError('');
+}else{
+  setError('Something went wrong. Please try again later');
+}
+  }
+
   return (
     <>
     {/* condition for login and signup page */}
@@ -46,18 +65,25 @@ const Login = () => {
       sx={{ mt: 3, width: 250 }}
       required
       id="outlined-required"
-      label="Username" />
+      label="Username"
+      onChange={(e) => onValueChange(e)}
+      name='username' 
+      value={login.username}/>
     <TextField
       sx={{ mt: 3, width: 250 }}
       required
       id="outlined-required"
       type='password'
-      label="Password" />
+      label="Password"
+      onChange={(e) => onValueChange(e)}
+      name='password'
+      value={login.password} />
     <Button
       sx={{ mt: 3, width: 100, bgcolor: '#4FC0D0', ":hover": { bgcolor: '#FF55BB' } }}
       disabled={false}
       size="medium"
       variant="contained"
+      onClick={()=> loginUser()}
     >Login
     </Button>
     <p className='mt-2'>OR</p>
