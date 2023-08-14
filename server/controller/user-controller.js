@@ -1,9 +1,12 @@
-import { response } from "express";
+
 import User from "../model/user.js";
 // this dependency below is imported for the purpose of encryption of password so that others can't see it 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import Token from "../model/token.js";
 
+dotenv.config();
 
 export const signupUser = async (req, res) => {
 try {
@@ -34,13 +37,19 @@ export const loginUser = async (req, res) => {
        if(match){
         // now we will match the password using token authentication by installing npm jsonwebtoken
 // the accesstoken expires after sometime so we have to create a refresh token so that it can generate a new access token
-const accessToken= jwt.sign(user.toJSON(), )
-const refreshToken=
+// now to create random key we can run this code in node require('crypto').randomBytes(64).toString('hex')
+const accessToken= jwt.sign(user.toJSON(), process.env.ACCCESS_SECRET_KEY, {expiresIn: '15m'});
+const refreshToken= jwt.sign(user.toJSON(), process.env.REFRESH_SECRET_KEY);
+
+const newToken = new Token({token: refreshToken});
+await newToken.save();
+
+return res.status(200).json({accessToken: accessToken, refreshToken: refreshToken, name:user.name, username: user.username});
        }else{
        return res.status(400).json({msg: 'password does not match'});
        }
     } catch (error) {
-        
+        return res.status(500).json({msg: 'Error while login user'});
     }
 
 }

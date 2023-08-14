@@ -2,6 +2,7 @@ import { Box, TextField, Button, Typography } from '@mui/material';
 import React, { useState } from 'react' ;
 import p1 from '../../images/p1.png';
 import { API } from '../../service/api.js';
+import { DataContext } from '../../context/DataProvider';
 
 const loginValues = {
   username:'',
@@ -51,6 +52,9 @@ if(response.isSuccess){
 setError('');
 }else{
   setError('Something went wrong. Please try again later');
+
+  sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
+  sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
 }
   }
 
@@ -99,21 +103,24 @@ setError('');
       <TextField
         sx={{ mt: 3, width: 250 }}
         required
-        id="outlined-required"
+        id="filled-required"
+        variant='filled'
         label="Name"
         name='name'
         onChange={(e) => InputChange(e)} />
       <TextField
         sx={{ mt: 3, width: 250 }}
         required
-        id="outlined-required"
+        id="filled-required"
+        variant='filled'
         label="Username"
         name='username'
         onChange={(e) => InputChange(e)} />
       <TextField
         sx={{ mt: 3, width: 250 }}
         required
-        id="outlined-required"
+        id="filled-password-input"
+        variant='filled'
         type='password'
         label="Password"
         name='password'
