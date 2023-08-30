@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         'turq': '#4FC0D0',
+        'dark-green-banner':'#183D3D',
       },
     },
   },

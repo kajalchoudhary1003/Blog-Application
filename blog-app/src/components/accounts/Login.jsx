@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import p1 from "../../images/p1.png";
 import { API } from "../../service/api.js";
 import { DataContext } from "../../context/DataProvider";
+import "./login.css";
 
 //importing so that the login page can navigate to homepage
 import { useNavigate } from "react-router-dom";
@@ -17,7 +18,7 @@ const signupValues = {
   username: "",
   password: "",
 };
-const Login = ({isUserAuthenticated}) => {
+const Login = ({ isUserAuthenticated }) => {
   const [account, toggleAccount] = useState("login");
   const [signup, setSignup] = useState(signupValues);
   const [error, setError] = useState("");
@@ -80,11 +81,11 @@ const Login = ({isUserAuthenticated}) => {
   };
 
   return (
-    <>
+    <box-content>
       {/* condition for login and signup page */}
       {account === "login" ? (
         // login page
-        <Box class="flex flex-col mt-10 items-center shadow-2xl p-8 h-fit rounded-xl">
+        <Box class="flex flex-col mt-10 items-center shadow-2xl p-8 h-fit w-fit rounded-xl">
           <img src={p1} alt="logo" class="w-60" />
           <TextField
             sx={{ mt: 3, width: 250 }}
@@ -133,7 +134,7 @@ const Login = ({isUserAuthenticated}) => {
         </Box>
       ) : (
         // signup page
-        <Box class="flex flex-col mt-10 items-center shadow-2xl p-8 h-fit rounded-xl">
+        <Box class="flex flex-col mt-10 items-center shadow-2xl p-8 h-fit w-fit rounded-xl">
           <img src={p1} alt="logo" class="w-60" />
           <TextField
             sx={{ mt: 3, width: 250 }}
@@ -193,7 +194,7 @@ const Login = ({isUserAuthenticated}) => {
           </Button>
         </Box>
       )}
-    </>
+    </box-content>
   );
 };
 
