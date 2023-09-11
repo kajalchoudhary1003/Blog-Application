@@ -3,6 +3,7 @@ import Login from "./components/accounts/Login";
 import DataProvider from "./context/DataProvider";
 import Home from "./components/home/Home";
 import Header from "./components/header/header";
+import CreatePost from "./components/create/CreatePost";
 import {
   BrowserRouter,
   Routes,
@@ -38,6 +39,12 @@ function App() {
             element={<PrivateRoute isAuthenticated={isAuthenticated} />}
           >
             <Route path="/" element={<Home />} />
+          </Route>
+          <Route
+            path="/create"
+            element={<PrivateRoute isAuthenticated={isAuthenticated} />}
+          >
+            <Route path="/create" element={<CreatePost />} />
           </Route>
         </Routes>
       </BrowserRouter>
