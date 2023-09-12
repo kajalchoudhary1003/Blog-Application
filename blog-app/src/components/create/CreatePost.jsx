@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import { useLocation } from "react-router-dom";
 import {DataContext} from '../../context/DataProvider';
-import {API} from '../../service/api';
+import {API} from '../../service/api.js';
 
 const VisuallyHiddenInput = styled("input")`
   clip: rect(0 0 0 0);
@@ -50,7 +50,7 @@ outline: none;
   const location= useLocation();
 
   const {account} = useContext(DataContext);
-
+  const url = post.picture ? post.picture : "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
   useEffect(() => {
     const getImage =async () =>{
 if (file){
@@ -62,21 +62,19 @@ if (file){
   // api call
   const response = await API.uploadFile(data);
   // api to upload the image
-  post.picture =response.data;
+  post.picture = response.data;
 }
     }
     getImage();
   post.categories = location.search?.split('=')[1] || 'All';
   post.username = account.username;
-    
-  }, [file])
+    }, [file]);
   
 
   const handleChange = (e) => {
     setPost({...post, [e.target.name]:e.target.value})
   }
-  const url =
-    post.picture ? post.picture : "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
+  
   return (
     <Container sx={{ mt: 3 }}>
       <div className="flex flex-row items-center">

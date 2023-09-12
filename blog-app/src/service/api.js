@@ -6,8 +6,10 @@ const API_URL ='http://localhost:8000';
 const axiosInstance = axios.create({
     baseURL:API_URL,
     timeout:10000,
-    headers:{
-        "Content-Type" :"application/json"
+    headers:{ 
+        // we had to change this code so that the image files could be uploaded easily
+        "Accept": "application/json, form-data",
+        // "Content-Type" :"application/json"
     }
 })
 
