@@ -79,7 +79,7 @@ const processError = (error) => {
     }
 }
 
-const API = {};
+const API = API_URL;
 
 for(const[key, value] of Object.entries(SERVICE_URLS)){
     API[key] = (body, showUploadProgress, showDownloadProgress) => 
@@ -100,6 +100,7 @@ for(const[key, value] of Object.entries(SERVICE_URLS)){
                 showDownloadProgress(perCompleted);
             }
         }
+        
       } ) 
     
 }

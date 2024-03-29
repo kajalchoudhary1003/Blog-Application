@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { styled } from "@mui/material/styles";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {DataContext} from '../../context/DataProvider';
 import {API} from '../../service/api.js';
 
@@ -48,6 +48,7 @@ outline: none;
   const[post,setPost]=useState(initialPost);
   const [file, setfile] =useState('');
   const location= useLocation();
+  const navigate = useNavigate();
 
   const {account} = useContext(DataContext);
   const url = post.picture ? post.picture : "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
@@ -72,7 +73,14 @@ if (file){
   
 
   const handleChange = (e) => {
-    setPost({...post, [e.target.name]:e.target.value})
+    setPost({...post, [e.target.name]:e.target.value});
+  }
+
+  const savePost = async() =>{
+    let response= await API.createPost(post);
+    if(response.isSuccess){
+      navigate('/');
+    }
   }
   
   return (
@@ -116,10 +124,10 @@ if (file){
         }}
       />
       {/* text area input */}
-      <TextArea minRows={25} placeholder="Start your blog..." onChange={(e)=>handleChange(e)} name="description"/>
+      <TextArea minRows={25} placeholder="Start your blog..." value={post} onChange={(e) => handleChange(e)} name="description"/>
       {/* publish button */}
       <div className="flex justify-center mb-2">
-      <Button variant="contained" sx={{backgroundColor:'#F2BE22',letterSpacing:'1px', ":hover":{backgroundColor:'#4FC0D0'}}}>Publish</Button>
+      <Button onClick ={()=> savePost()} variant="contained" sx={{backgroundColor:'#F2BE22',letterSpacing:'1px', ":hover":{backgroundColor:'#4FC0D0'}}}>Publish</Button>
       </div>
       
     </Container>
