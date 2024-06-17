@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { styled } from "@mui/material/styles";
-import { TextareaAutosize } from "@mui/base/TextareaAutosize";
+import {TextareaAutosize} from "@mui/base";
 import { useLocation, useNavigate } from "react-router-dom";
 import {DataContext} from '../../context/DataProvider';
 import {API} from '../../service/api.js';
@@ -29,8 +29,7 @@ const initialPost ={
   createDate: new Date()
 }
 
-const CreatePost = () => {
-  // text area styling
+ // text area styling
   const TextArea = styled(TextareaAutosize)`
     width: 100%;
     margin-top: 5px;
@@ -40,10 +39,13 @@ const CreatePost = () => {
     border-radius: 5px;
     font-size: 18px;
     font-family: "Times New Roman", Times, serif;
-    :focus {
+    &:focus-visible {
 outline: none;
     }
   `;
+
+const CreatePost = () => {
+ 
 
   const[post,setPost]=useState(initialPost);
   const [file, setfile] =useState('');
@@ -71,17 +73,17 @@ if (file){
   post.username = account.username;
     }, [file]);
   
+    const savePost = async() =>{
+        let response= await API.createPost(post);
+        if(response.isSuccess){
+          navigate('/');
+        }
+      }
 
   const handleChange = (e) => {
     setPost({...post, [e.target.name]:e.target.value});
   }
 
-  const savePost = async() =>{
-    let response= await API.createPost(post);
-    if(response.isSuccess){
-      navigate('/');
-    }
-  }
   
   return (
     <Container sx={{ mt: 3 }}>
@@ -124,7 +126,8 @@ if (file){
         }}
       />
       {/* text area input */}
-      <TextArea minRows={25} placeholder="Start your blog..." value={post} onChange={(e) => handleChange(e)} name="description"/>
+
+        <TextArea minRows={25} placeholder="Start your blog..." name="description" onChange={(e) => handleChange(e)}/>
       {/* publish button */}
       <div className="flex justify-center mb-2">
       <Button onClick ={()=> savePost()} variant="contained" sx={{backgroundColor:'#F2BE22',letterSpacing:'1px', ":hover":{backgroundColor:'#4FC0D0'}}}>Publish</Button>
