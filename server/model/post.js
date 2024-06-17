@@ -12,7 +12,7 @@ description:{
 },
 picture:{
     type: String,
-    required: true,
+    required: false,
 },
 username:{
     type: String,
