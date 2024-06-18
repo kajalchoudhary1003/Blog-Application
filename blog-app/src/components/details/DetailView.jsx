@@ -1,9 +1,61 @@
-import React from 'react'
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { API } from "../../service/api";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { DataContext } from "../../context/DataProvider";
 
 const DetailView = () => {
-  return (
-    <div>DetailView</div>
-  )
-}
+  const [post, setPost] = useState({});
 
-export default DetailView
+  const { id } = useParams();
+  const { account } = useContext(DataContext);
+
+  const url = post.picture
+    ? post.picture
+    : "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
+  useEffect(() => {
+    const fetchData = async () => {
+      let response = await API.getPostById(id);
+      if (response.isSuccess) {
+        setPost(response.data);
+      }
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <div className="container mx-auto px-24">
+      <img src={url} className="object-contain h-[30rem] w-full" alt="blog" />
+      {/* condition for icon to be shown only if username matches of the post username */}
+      {account.username === post.username && (
+        <div className="flex flex-row justify-center my-2 gap-5">
+          <EditIcon
+            className="cursor-pointer hover:scale-110 "
+            sx={{ color: "#FF55BB", fontSize: 35 }}
+          />
+          <DeleteIcon
+            className="cursor-pointer hover:scale-110"
+            sx={{ color: "#4FC0D0", fontSize: 35 }}
+          />
+        </div>
+      )}
+
+      <h1 className="text-3xl font-bold my-2 text-wrap">{post.title}</h1>
+
+      <p className="text-lg text-wrap">{post.description}</p>
+      <p className="text-end font-semibold text-sm text-slate-500 my-3">
+        Author : {post.username}
+      </p>
+      <p className="text-end font-semibold text-sm text-slate-500 my-3">
+        Posted On :{" "}
+        {post.createdDate
+          ? new Date(post.createdDate).toDateString()
+          : "Date not available"}
+      </p>
+    </div>
+  );
+};
+
+export default DetailView;
