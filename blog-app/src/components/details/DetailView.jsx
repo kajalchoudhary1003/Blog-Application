@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { API } from "../../service/api";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,6 +11,8 @@ const DetailView = () => {
 
   const { id } = useParams();
   const { account } = useContext(DataContext);
+
+  const navigate = useNavigate();
 
   const url = post.picture
     ? post.picture
@@ -25,17 +27,28 @@ const DetailView = () => {
     fetchData();
   }, []);
 
+  const deleteBlog = async () => {
+    let response = await API.deletePost(post._id);
+  if(response.isSuccess){
+    navigate('/');
+  }
+  }
+
   return (
     <div className="container mx-auto px-24">
       <img src={url} className="object-contain h-[30rem] w-full" alt="blog" />
       {/* condition for icon to be shown only if username matches of the post username */}
       {account.username === post.username && (
         <div className="flex flex-row justify-center my-2 gap-5">
-          <EditIcon
+         <Link to={`/update/${post._id}`}>
+         <EditIcon
             className="cursor-pointer hover:scale-110 "
             sx={{ color: "#FF55BB", fontSize: 35 }}
           />
+         </Link>
+         
           <DeleteIcon
+          onClick={() => deleteBlog()}
             className="cursor-pointer hover:scale-110"
             sx={{ color: "#4FC0D0", fontSize: 35 }}
           />
