@@ -29,26 +29,26 @@ const DetailView = () => {
 
   const deleteBlog = async () => {
     let response = await API.deletePost(post._id);
-  if(response.isSuccess){
-    navigate('/');
-  }
-  }
+    if (response.isSuccess) {
+      navigate("/");
+    }
+  };
 
   return (
     <div className="container mx-auto px-24">
       <img src={url} className="object-contain h-[30rem] w-full" alt="blog" />
       {/* condition for icon to be shown only if username matches of the post username */}
       {account.username === post.username && (
-        <div className="flex flex-row justify-center my-2 gap-5">
-         <Link to={`/update/${post._id}`}>
-         <EditIcon
-            className="cursor-pointer hover:scale-110 "
-            sx={{ color: "#FF55BB", fontSize: 35 }}
-          />
-         </Link>
-         
+        <div className="flex flex-row justify-end my-2 gap-5">
+          <Link to={`/update/${post._id}`}>
+            <EditIcon
+              className="cursor-pointer hover:scale-110 "
+              sx={{ color: "#FF55BB", fontSize: 35 }}
+            />
+          </Link>
+
           <DeleteIcon
-          onClick={() => deleteBlog()}
+            onClick={() => deleteBlog()}
             className="cursor-pointer hover:scale-110"
             sx={{ color: "#4FC0D0", fontSize: 35 }}
           />

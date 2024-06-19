@@ -23,11 +23,9 @@ const Posts = () => {
     <div className="flex flex-wrap px-3 justify-center">
       {posts && posts.length > 0 ? (
         posts.map((post) => (
-
           <div className="lg:w-1/3 md:w-1/2 w-full">
             <Link to={`details/${post._id}`}>
-            <Post post={post} />
-
+              <Post post={post} />
             </Link>
           </div>
         ))

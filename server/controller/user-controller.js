@@ -51,14 +51,12 @@ export const loginUser = async (req, res) => {
       const newToken = new Token({ token: refreshToken });
       await newToken.save();
 
-      return res
-        .status(200)
-        .json({
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          name: user.name,
-          username: user.username,
-        });
+      return res.status(200).json({
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        name: user.name,
+        username: user.username,
+      });
     } else {
       return res.status(400).json({ msg: "password does not match" });
     }

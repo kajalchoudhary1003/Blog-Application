@@ -2,7 +2,13 @@ import express from "express";
 import { signupUser, loginUser } from "../controller/user-controller.js";
 import { uploadImage, getImage } from "../controller/image-controller.js";
 import upload from "../utils/upload.js";
-import { createPost, getAllPosts, getPost, updatePost, deletePost } from "../controller/post-controller.js";
+import {
+  createPost,
+  getAllPosts,
+  getPost,
+  updatePost,
+  deletePost,
+} from "../controller/post-controller.js";
 import { authenticateToken } from "../controller/jwt-controller.js";
 
 const router = express.Router();

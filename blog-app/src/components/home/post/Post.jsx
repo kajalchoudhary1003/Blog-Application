@@ -14,14 +14,14 @@ const Post = ({ post }) => {
       />
       <div className="flex flex-row justify-end pr-2">
         {" "}
-        <p className="text-sm font-semibold text-slate-500">
+        <p className="text-sm font-bold text-[#FF55BB]">
           Category : {post.categories}
         </p>
       </div>
       <p className="font-semibold text-2xl pl-2 truncate ">{post.title}</p>
 
       <p className="pl-2 truncate">{post.description}</p>
-      <div className="flex flex-row justify-end pr-2 text-sm font-semibold text-slate-400 mt-4">
+      <div className="flex flex-row justify-end pr-2 text-sm font-bold text-[#4FC0D0] mt-4">
         <p>Author : {post.username}</p>
       </div>
     </div>
