@@ -18,6 +18,9 @@ A full-stack MERN (MongoDB, Express.js, React, Node.js) blog platform with user 
 ## Demo
 
 
+https://github.com/user-attachments/assets/d713caf0-7036-4a6a-bff2-132b3d584afd
+
+
 
 ## Tech Stack
 
